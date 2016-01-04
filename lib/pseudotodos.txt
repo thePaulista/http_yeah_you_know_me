@@ -1,0 +1,28 @@
+
+------Iteration 0 - Hello, World (0)
+Todo: Build a HTTP server
+Case:  That fetches a web page
+And:     Given an HTTP server on port 9292
+    And a file "some.html" with
+    """
+    <html>
+    <body>
+    Hello, World (0) with incrementing counter
+    </body>
+    </html>
+    """
+    When I fetch "http://localhost:5000/"
+    Then I should see "Hello, World (0)
+    with an incrementing counter until server is restarted
+    Hopefully! :-)
+
+Pseudocode
+
+initialize HTTP server with an HTTP request
+  accept request
+  add a counter
+
+in the main runner do:
+loop through each request that comes in, and output
+with a webpage in some.html file that says
+"HOLA PLANETA AZUL! (0)"
