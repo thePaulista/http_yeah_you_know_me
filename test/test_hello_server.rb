@@ -1,12 +1,18 @@
-require 'test_helper'
-require 'hello_server'
+# require 'test_helper'
+require 'minitest/autorun'
+require 'minitest/pride'
+require './lib/hello_server'
+require "hurley"
+require "hurley/test"
 
 class Hello_ServerTest < Minitest::Test
 
   def test_TCPServer_can_be_initialized
-    skip
+    # skip
     server = Hello_Server.new
+    wow = `curl 'http://localhost:9292'`
 
+    assert_equal true, wow.include?("Planeta Azul") && wow.include?("200 OK")
   end
 
   def test_localhost_is_the_default_host
