@@ -18,5 +18,5 @@ class Hello_Server
    end
 end
 
-server = Hello_Server.new
-server.runner
+# server = Hello_Server.new
+# server.runner
