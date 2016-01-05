@@ -11,6 +11,7 @@ class Hello_Server
   def run
     while client_socket = @server.accept
       request = client_socket.gets
+      # puts request   #optional for us.  not required according to specs
       response = "Ola Planeta Azul (#{@counter+=1})"
       client_socket.puts response
       client_socket.close
@@ -19,7 +20,4 @@ class Hello_Server
 end
 
 # server = Hello_Server.new
-
-# server.runner
-
 # server.run
