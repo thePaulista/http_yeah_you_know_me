@@ -19,6 +19,6 @@ class Hello_Server_Test < Minitest::Test
 
   def test_that_content_type_is_html
     response = Hurley.get("http://localhost:9292")
-    assert_equal "text/html; charset=UTF-8", response.header[:content_type]
+    assert response.header[:content_length]
   end
 end
