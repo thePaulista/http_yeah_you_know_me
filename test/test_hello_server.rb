@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/hello_server'
 require "hurley"
-require "hurley/test"
+# require "hurley/test"
 
 class Hello_ServerTest < Minitest::Test
 

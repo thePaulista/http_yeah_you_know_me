@@ -1,0 +1,24 @@
+module version
+
+There will be a dedicated Server class
+that takes in a module with all the methods needed to run
+the iterations.
+
+Build a class
+  starts on initialize
+    initialize will create a server object
+    will take a counter
+
+  have a method that is a delegator
+    it delegates different parts of the iteration
+      request
+
+ Then build the module.
+
+
+
+--------
+Test
+
+to mock or not to mock
+to stub or not to stub

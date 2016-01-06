@@ -18,6 +18,7 @@ class Diagnostics_Server
     ]
     while client_socket = @server.accept
       request = client_socket.gets
+      
       response = "<pre>" + request_lines.join("\n") + "</pre>"
       output = "<html><head></head><body>#{response}</body></html>"
       client_socket.puts output
