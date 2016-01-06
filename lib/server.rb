@@ -1,12 +1,15 @@
 require 'socket'
 require 'thread'
 require 'pry'
+require 'diagnostics'
+require 'supporting_paths'
 
 class Server
+  attr_reader :host, :port
 
-  def initialize
-    @server = TCPserver.new("localhost",9292)
-    count = 0
+  def initialize(host = "localhost", port = 9292)
+    @server = TCPServer.new(@host = host, @port = port)
+    @counter = 0
   end
 
   def start
@@ -16,22 +19,24 @@ class Server
         puts "Incoming request: #{request}"
         case request
         when diagnostics
-          client.puts Diagnostics.new
+          client.puts Diagnostics.new.start
         when supporting_paths
-          client.start Supporting_Paths.new
-        when parameters
-          client.start Supporting_Parameters.new
-        when games
-          client.start Games.new
-        when response_codes
-          client.start Response.new
+          client.puts Supporting_Paths.new.start
+        # when parameters
+        #   client.start Supporting_Parameters.new
+        # when games
+        #   client.start Games.new
+        # when response_codes
+        #   client.start Response.new
         end
+        client.close
       end
     end
   end
-
 end
 
+server = Server.new
+server.start
 
 # server = TCPServer.new("localhost",9292)
 # while true
