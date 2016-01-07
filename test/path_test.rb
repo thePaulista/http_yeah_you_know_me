@@ -3,7 +3,6 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'path'
-require 'diagnostics'
 class Path_test < MiniTest::Test
 
   def test_empty_path_leads_to_diagnostics

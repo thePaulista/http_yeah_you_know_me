@@ -1,7 +1,7 @@
 require 'socket'
 require 'thread'
 require 'pry'
-# require 'diagnostics'
+require 'diagnostics'
 # require 'supporting_paths'
 
 class Server
