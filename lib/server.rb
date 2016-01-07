@@ -1,8 +1,8 @@
 require 'socket'
 require 'thread'
-require 'pry'
-require 'diagnostics'
-require 'supporting_paths'
+# require 'pry'
+# require 'diagnostics'
+# require 'supporting_paths'
 
 class Server
   attr_reader :host, :port
@@ -13,34 +13,48 @@ class Server
   end
 
   def start
-    Thread.new(@server.accept) do |client|
+    Thread.new {
       while true do
-        request = client.get.chomp
-        puts "Incoming request: #{request}"
-        case request
-        when diagnostics
-          client.puts Diagnostics.new.start
-        when supporting_paths
-          client.puts Supporting_Paths.new.start
+        client_socket = @server.accept
+        request_lines = []
+          while line = client_socket.gets and !line.chomp.empty?
+            request_lines << line.chomp
+          end
+          first_line = request_lines.first
+          puts "Incoming request: #{first_line}"
+          case first_line.split[1]
+          when "/Hello_World"
+          file_text = IO.readlines("lib/hello_world.html").join
+          client_socket.puts file_text % (@counter += 1)
+          when "/diagnostics"
+          client_socket.puts output_diagnostics(request_lines)
+        # when supporting_paths
+        #   client_socket.puts Supporting_Paths.new.start
         # when parameters
-        #   client.start Supporting_Parameters.new
+        #   client_socket.puts Supporting_Parameters.new
         # when games
-        #   client.start Games.new
+        #   client_socket.puts Games.new
         # when response_codes
-        #   client.start Response.new
-        end
-        client.close
+        #   client_socket.puts Response.new
       end
-    end
+      client_socket.close
+      end
+    }
   end
+
+  def output_diagnostics(request_lines)
+    return          ["Verb: %s" % request_lines.first.split[0],
+                    "Path: %s" % request_lines.first.split[1],
+                    "Protocol: HTTP/1.1",
+                    "Host: 127.0.0.1",
+                    "Port: 9292",
+                    "Origin: 127.0.0.1",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+
+    ]
+  end
+
 end
 
 server = Server.new
-server.start
-
-# server = TCPServer.new("localhost",9292)
-# while true
-#   Thread.new(server.accept) do |client|
-#     Client_Side.new(client)
-#   end
-# end
+server.start.join

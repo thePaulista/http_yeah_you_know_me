@@ -1,4 +1,3 @@
-require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'hurley'
@@ -21,4 +20,5 @@ class Hello_Server_Test < Minitest::Test
     response = Hurley.get("http://localhost:9292")
     assert response.header[:content_length]
   end
+
 end
