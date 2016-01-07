@@ -1,33 +1,19 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-
+require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'path'
+require 'diagnostics'
+class Path_test < MiniTest::Test
 
-
-class PathTest < Minitest::Test
-
-  def test_that_the_class_can_be_initialized
-    path = Path.new
-
-    assert path
-  end
-
-  def test_that_the_initial_total_count_is_to_zero
+  def test_empty_path_leads_to_diagnostics
     skip
-    path = Path.new
-
+    a = Path.new.path_allocate("/")
+    assert_equal "diagnostics", a
   end
 
-  def test_that_the_initial_hello_count_is_set_to_zero
-    skip
-    path = Path.new
-
+  def test_hello_path_leads_to_greeting
+   a = Path.new.path_allocate("/hello")
+   assert_equal "Hello World (0)", a
   end
-
-  def test_that_the_path_allocates_to_the_designated_paths
-    skip
-    path = Path.new
-
-  end
-
 end

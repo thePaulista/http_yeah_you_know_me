@@ -1,6 +1,6 @@
 require 'socket'
 require 'thread'
-# require 'pry'
+require 'pry'
 # require 'diagnostics'
 # require 'supporting_paths'
 
@@ -44,17 +44,20 @@ class Server
   end
 
   def output_diagnostics(request_lines)
-    puts verb_value = request_lines[0].split.first
-    puts path_value = request_lines[1].split[1].split
-
+    verb_value = request_lines[0].split.first
+    path_value = request_lines[0].split[1]
+    protocol_value = request_lines[0].split[2]
+    host_value = request_lines[1].split[1].split(/:/)[0]
+    port_value = request_lines[1].split[1].split(/:/)[1]
+    origin_value = host_value
+    accept_value = "text/html" + "," + request_lines[7].split[1..-1].join(",")
     return          ["Verb: %s" % verb_value,
-                    "Path: %s", % verb_value
-                    "Protocol: HTTP/1.1",
-                    "Host: 127.0.0.1",
-                    "Port: 9292",
-                    "Origin: 127.0.0.1",
-                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
-
+                     "Path: %s" % path_value,
+                    "Protocol: %s" % protocol_value,
+                    "Host: %s" % host_value,
+                    "Port: %s" % port_value,
+                    "Origin: %s" % origin_value,
+                    "Accept: %s" % accept_value
     ]
   end
 
