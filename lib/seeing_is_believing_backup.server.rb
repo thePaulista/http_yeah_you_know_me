@@ -18,17 +18,17 @@ class Server
         client_socket = @server.accept
         puts "Ready for a request"
         request_lines = []
-        while line = client_socket.gets and !line.chomp.empty?
-        request_lines << line.chomp
-        end
-        first_line = request_lines.first
-        puts "Incoming request: #{first_line}"
-        case first_line.split[1]
+        while line = client.gets and !line.chomp.empty?
+  request_lines << line.chomp
+end
+        request_lines = client_socket.gets.chomp
+        puts "Incoming request: #{request}"
+        case request.split[1]
         when "/Hello_World"
           file_text = IO.readlines("lib/hello_world.html").join
           client_socket.puts file_text % (@counter += 1)
         when "/diagnostics"
-          client_socket.puts output_diagnostics(request_lines)
+          client_socket.puts output_diagnostics(request)
         # when supporting_paths
         #   client_socket.puts Supporting_Paths.new.start
         # when parameters
@@ -43,12 +43,10 @@ class Server
     }
   end
 
-  def output_diagnostics(request_lines)
-    puts verb_value = request_lines[0].split.first
-    puts path_value = request_lines[1].split[1].split
+  def output_diagnostics(request)
 
-    return          ["Verb: %s" % verb_value,
-                    "Path: %s", % verb_value
+    return          ["Verb: %s" % request.split.first,
+                    "Path: /",
                     "Protocol: HTTP/1.1",
                     "Host: 127.0.0.1",
                     "Port: 9292",
