@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift(File.expand_path("path",__dir__))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'minitest/autorun'
 require 'minitest/pride'
