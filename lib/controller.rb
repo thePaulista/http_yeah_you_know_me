@@ -12,6 +12,8 @@ class Controller
     @total_count += 1
     case path
     when "/", "/diagnostics"
+
+      # return "\n\nx\n\n"
       diagnostics(request_lines)
     when "/hello"
       hello

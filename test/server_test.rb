@@ -50,12 +50,6 @@ class ServerTest < Minitest::Test
     assert_equal "Hello World (3)", page.css('body')[0].text.strip
   end
 
-  def test_server_path_outputs_a_string
-    response = @conn.get '/datetime'
-
-    assert_equal "", response.body
-  end
-
   def test_server_outputs_status_line_is_not_404
     response = @conn.get 'status'
 
