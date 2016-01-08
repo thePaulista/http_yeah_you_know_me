@@ -63,5 +63,7 @@ class Server
 
 end
 
-server = Server.new
-server.start.join
+if __FILE__ == $0
+  server = Server.new
+  server.start.join
+end
