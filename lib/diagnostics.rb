@@ -1,5 +1,3 @@
-require 'socket'
-
 class Diagnostics
 
   def initialize(request_lines)
@@ -14,7 +12,7 @@ class Diagnostics
                 "Port: %s" % port,
                 "Origin: %s" % origin,
                 "Accept: %s" % accept
-    ]
+    ].join + "\n"
   end
 
   def verb
@@ -45,5 +43,3 @@ class Diagnostics
     "text/html" + "," + @request_lines[7].split[1..-1].join(",")
   end
 end
-
-# puts Diagnostics.new.output_diagnostics

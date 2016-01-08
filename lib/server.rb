@@ -1,10 +1,6 @@
 require 'socket'
 require 'thread'
-# require 'pry'
-
 require_relative 'controller'
-
-# require 'supporting_paths'
 
 class Server
   attr_reader :host, :port
@@ -23,21 +19,14 @@ class Server
           request_lines << line.chomp
         end
         first_line = request_lines.first
-        puts "Incoming request: #{first_line}"
+        # puts "Incoming request: #{first_line}"
         path = first_line.split[1].split('?')[0]
         content = controller.get_content_for(path, request_lines)
+        client_socket.puts "HTTP/1.1 200 OK"
         client_socket.puts content
-
-      # when games
-      #   client_socket.puts Games.new
-      # when response_codes
-      #   client_socket.puts Response.new
-        # end
-
         client_socket.close
         exit if path == "/shutdown"
       end
-
     }
   end
 
