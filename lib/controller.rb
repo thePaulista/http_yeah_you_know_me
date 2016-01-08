@@ -17,8 +17,12 @@ class Controller
       hello
     when "/datetime"
       datetime
+    when "/word_search"
+      word_search(request_lines)
     when "/shutdown"
       shutdown
+    else
+      "Path not recognized: #{path}"
     end
   end
 
@@ -33,6 +37,16 @@ class Controller
 
   def datetime
     Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
+  end
+
+  def word_search(request_lines)
+    word = request_lines.first.split[1].split('?')[1].split('=')[1]
+    dict = IO.readlines("/usr/share/dict/words")
+    if dict.include?(word.downcase + "\n")
+      "#{word} is a known word"
+    else
+     "#{word} is not a known word"
+    end
   end
 
   def shutdown

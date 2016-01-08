@@ -24,12 +24,10 @@ class Server
         end
         first_line = request_lines.first
         puts "Incoming request: #{first_line}"
-        path = first_line.split[1]
+        path = first_line.split[1].split('?')[0]
         content = controller.get_content_for(path, request_lines)
         client_socket.puts content
 
-      # when parameters
-      #   client_socket.puts Supporting_Parameters.new
       # when games
       #   client_socket.puts Games.new
       # when response_codes
