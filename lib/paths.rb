@@ -2,13 +2,14 @@ require 'diagnostics'
 
 class Path
   attr_reader :total_count, :@hello_count
+
   def initialize
     path_allocate
     @total_count = 0
     @hello_count = 0
   end
 
-  def path_allocate(path)
+  def path_allocate
     case path
     when "/"
       diagnostics
@@ -23,22 +24,23 @@ class Path
 
   def diagnostics
     @total_count += 1
-    Diagnostics.new.start
+    Diagnostics.new.output_diagnostics
   end
 
   def hello
     @total_count += 1
-    display Hello_World (#{hello_count +=0})
+    puts IO.readlines("lib/hello_world.html")
+     include (#{hello_count +=0})
   end
 
   def datetime
     @total_count += 1
-    display date and time in html
+    puts Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
   end
 
   def shutdown
-    return @total_count
-    then exit
+    return "Total requests: #{@total_count}"
+    abort
   end
 
 end

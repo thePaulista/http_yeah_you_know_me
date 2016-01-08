@@ -18,18 +18,9 @@ class ServerTest < Minitest::Test
   end
 
   def test_default_listening_port_is_9292
+    response = @conn.get '/Hello_World'
 
-    # s = @server.port
-
-    # assert_equal 9292, s
-
-    # response = @conn.get '/Hello_World'
-    # page = Nokogiri::HTML(response.body)
-    # assert_equal "Hello World (1)", page.css('body')[0].text.strip
-
-    # response = @conn.get '/Hello_World'
-    # page = Nokogiri::HTML(response.body)
-    # assert_equal "Hello World (2)", page.css('body')[0].text.strip
+    assert_equal 9292, response.
   end
 
   def test_server_can_output_hello_world
@@ -44,9 +35,9 @@ class ServerTest < Minitest::Test
     page = Nokogiri::HTML(response.body)
 
     assert_equal "Hello World (1)", page.css('body')[0].text.strip
-    #
-    # response = @conn.get '/Hello_World'
-    # page = Nokogiri::HTML(response.body)
+
+    response = @conn.get '/Hello_World'
+    page = Nokogiri::HTML(response.body)
 
     assert_equal "Hello World (2)", page.css('body')[0].text.strip
 
