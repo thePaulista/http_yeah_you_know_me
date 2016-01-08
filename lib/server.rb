@@ -1,7 +1,8 @@
 require 'socket'
 require 'thread'
 # require 'pry'
-require_relative 'diagnostics'
+
+require_relative 'controller'
 
 # require 'supporting_paths'
 
@@ -10,11 +11,11 @@ class Server
 
   def initialize(host = "localhost", port = 9292)
     @server = TCPServer.new(@host = host, @port = port)
-    @counter = 0
   end
 
   def start
     Thread.new {
+      controller = Controller.new
       while true do
         client_socket = @server.accept
         request_lines = []
@@ -23,23 +24,22 @@ class Server
         end
         first_line = request_lines.first
         puts "Incoming request: #{first_line}"
-        case first_line.split[1]
-        when "/Hello_World"
-          file_text = IO.readlines("lib/hello_world.html").join
-          client_socket.puts file_text % (@counter += 1)
-        when "/diagnostics"
-          client_socket.puts Diagnostics.new(request_lines).output_diagnostics
-      # when supporting_paths
-      #   client_socket.puts Supporting_Paths.new.start
+        path = first_line.split[1]
+        content = controller.get_content_for(path, request_lines)
+        client_socket.puts content
+
       # when parameters
       #   client_socket.puts Supporting_Parameters.new
       # when games
       #   client_socket.puts Games.new
       # when response_codes
       #   client_socket.puts Response.new
-        end
+        # end
+
         client_socket.close
+        exit if path == "/shutdown"
       end
+
     }
   end
 
